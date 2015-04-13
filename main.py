@@ -25,7 +25,7 @@ from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
-								autoescape = True)
+                                autoescape = True)
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -42,6 +42,56 @@ class MainHandler(Handler):
     def get(self):
         self.render("welcome.html")
 
+class UserDashboard(Handler):
+    def get(self):
+        #get the JSON from the database
+        self.render("userdashboard.html")
+        
+class Vote(Handler):
+    def get(self):
+        pass
+
+class Results(Handler):
+    def get(self):
+        pass
+
+class CreateEvent(Handler):
+    def get(self):
+        self.render("createevent.html")
+    def post(self):
+        #get information here
+        #save it as a JSON
+        #then save it to the database
+        pass
+
+class Register(Handler):
+    def get(self):
+        self.render("register.html")
+
+    def post(self):
+        self.request.get("username")
+        self.request.get("password")
+        self.request.get("email")
+
+        self.render("userDashboard.html")
+
+class Login(Handler):
+    def get(self):
+        self.render("login.html")
+
+class User(ndb.Model):
+    name = ndb.StringProperty(required=True)
+    password = ndb.StringProperty(required=True)
+    email = ndb.StringProperty(required=True)
+
+class Event(ndb.Model):
+    eventInfoJson = ndb.TextProperty(required=True)
+    created = ndb.DateTimeProperty(required=True)
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/Login', Login),
+    ('/Register', Register),
+    ('/UserDashboard', UserDashboard),
+    ('/CreateEvent', CreateEvent)
 ], debug=True)

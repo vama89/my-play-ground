@@ -1,0 +1,47 @@
+Documentation: JSON Structure
+http://jsonformatter.curiousconcept.com/
+Validated:
+
+{
+"eventName" : "Joe's Wedding",
+"description": "It is Joe's Wedding",
+"groupTotal" : 3,
+"groupCounter" : 0,
+"waitFlag" : 0,
+"eventCreator" : "Joe",
+"groupMembers" : ["Joe", "Jerry", "Tom"],
+"groupVoteRanks" :[[1,2,3], [1,2,3], [1,2,3]],
+"userConfirmations" : [1,1,1],
+"Hangouts" :
+	{
+		"option1" : {
+			"date": "02-01-2007",
+			"time": "01-05-AM",
+			"place": "BJ's Pizzeria",
+			"address": "16789 Du Pont Rd, Chino, Ca"},
+		"option2" :{
+			"date": "02-01-2007",
+			"time": "01-05-AM",
+			"place": "BJ's Pizzeria",
+			"address": "16789 Du Pont Rd, Ch"},
+		"option3" :{
+			"date": "02-01-2007",
+			"time": "01-05-AM",
+			"place": "BJ's Pizzeria",
+			"address": "16789 Du Pont Rd, Ch"}
+		},
+"results" : []
+}
+
+*NOTES*
+waitflag meanings: 
+	0 - not everyone has voted yet. Voting in process.
+	1 - everyone voted. You are not waiting anymore
+
+confirmations:
+	0 - maybe going (was not their first choice; they must reconfirm)
+	1 - Going for sure
+	2 - Was a maybe but now is going (reconfirmed)
+	3 - Was a maybe but now can't go (it wasn't their first preference)
+
+results is from the voting code. [1stPlace, 2nd, 3rd]
