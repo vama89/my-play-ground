@@ -44,8 +44,12 @@ class MainHandler(Handler):
 
 class UserDashboard(Handler):
     def get(self):
-        #get the JSON from the database
-        self.render("userdashboard.html")
+        #if user is logged in:
+            #get the JSON from the database
+            #self.render(userdashboard.html, json=json)
+            #just parse the json on the html page. Display it there.
+
+        self.render("userdashboard.html") #I think ship the JSON as a var.
         
 class Vote(Handler):
     def get(self):
@@ -73,7 +77,10 @@ class Register(Handler):
         self.request.get("password")
         self.request.get("email")
 
-        self.render("userDashboard.html")
+        #p = User(username,password,email)
+        #p.put() #saves to the database
+
+        self.rendirect("/UserDashboard")
 
 class Login(Handler):
     def get(self):
@@ -84,9 +91,15 @@ class User(ndb.Model):
     password = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
 
+    #somehow account for their friends and contacts
+    #somehow account for profile pictures
+
 class Event(ndb.Model):
     eventInfoJson = ndb.TextProperty(required=True)
     created = ndb.DateTimeProperty(required=True)
+
+    #somehow have pictures for the event
+        #each event is to have some group photo
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
