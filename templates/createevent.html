@@ -1,5 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>Create Event</h3>
+<form method="post">
+	<b>Event Title:</b>
+	<input type="string" name="event" placeholder="Event Name" required>
+	<input type="textarea" name="description" placeholder="Description" required>
+	<br>
+	<h3>Friends Invited</h3>
+    <input type="string" name="friend1" required/>
+    <input type="string" name="friend2" required/>
+    <input type="string" name="friend3" required/>
+	<br>
+	<h3>Hangout 1</h3>
+	<p>Date:</p>
+	<input type="date" name="date1" placeholder="Date" required>
+	<p>Time:</p>
+	<input type="time" name="time1" required>
+	<p>Location:</p>
+	<input type="string" name="locationname1" placeholder="Enter Location Name" required>
+	<br>
+	<h3>Hangout 2</h3>
+	<p>Date:</p>
+	<input type="date" name="date2" placeholder="Date" required>
+	<p>Time:</p>
+	<input type="time" name="time2" required>
+	<p>Location:</p>
+	<input type="string" name="locationname2" placeholder="Enter Location Name" required>
+	<br>
+	<h3>Hangout 1</h3>
+	<p>Date:</p>
+	<input type="date" name="date3" placeholder="Date" required>
+	<p>Time:</p>
+	<input type="time" name="time3" required>
+	<p>Location:</p>
+	<input type="string" name="locationname3" placeholder="Enter Location Name" required>
+	<br>
+	<p>When should everyone vote by?</p>
+	<input type="date" name="dateclose" required>
+	<br>
+	<input type="submit">
+</form>
 {% endblock %}

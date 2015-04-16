@@ -30,6 +30,7 @@ Validated:
 			"place": "BJ's Pizzeria",
 			"address": "16789 Du Pont Rd, Ch"}
 		},
+"dateclose" : "02-01-2007"
 "results" : []
 }
 
