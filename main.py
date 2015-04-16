@@ -96,8 +96,13 @@ class UserDashboard(BlogHandler):
             #get the JSON from the database
             #self.render(userdashboard.html, json=json)
             #just parse the json on the html page. Display it there.
-
-        self.render("userdashboard.html") #I think ship the JSON as a var.
+        if self.user:
+            username = self.user.name
+            eventInfo = Event.query()
+            self.render("userdashboard.html", username=username, eventInfo=eventInfo)
+        else:
+            self.redirect("/Login")
+        #I think ship the JSON as a var.
         #self.render("userdashboard.html", eventInfoJson)
         
 class Vote(BlogHandler):
@@ -120,10 +125,13 @@ class Results(BlogHandler):
 
 class CreateEvent(BlogHandler):
     def get(self):
-        self.render("createevent.html")
+        if self.user:
+            self.render("createevent.html")
+        else:
+            self.redirect("/Login")
     def post(self):
 
-        userCreated = "Joe"
+        userCreated = self.user.name
         eventName = self.request.get("event")
         description = self.request.get("description")
 
@@ -204,7 +212,7 @@ def valid_email(email):
 
 class Signup(BlogHandler):
     def get(self):
-        self.render("register.html")
+        self.render("signup-form.html")
 
     def post(self):
         have_error = False
@@ -232,7 +240,7 @@ class Signup(BlogHandler):
             have_error = True
 
         if have_error:
-            self.render('register.html', **params)
+            self.render('signup-form.html', **params)
         else:
             self.done()
 
@@ -245,17 +253,20 @@ class Register(Signup):
         u = User.by_name(self.username)
         if u:
             msg = 'That user already exists.'
-            self.render('register.html', error_username = msg)
+            self.render('signup-form.html', error_username = msg)
         else:
             u = User.register(self.username, self.password, self.email)
             u.put()
 
             self.login(u)
-            self.render('welcome.html', username=self.username)
+            self.redirect('/UserDashboard')
 
 class Login(BlogHandler):
     def get(self):
-        self.render('login.html')
+        if self.user:
+            self.redirect("/UserDashboard")
+        else:
+            self.render("login.html")
 
     def post(self):
         username = self.request.get('username')
@@ -264,10 +275,10 @@ class Login(BlogHandler):
         u = User.login(username, password)
         if u:
             self.login(u)
-            self.render("welcome.html", username=username)
+            self.redirect("/UserDashboard")
         else:
             msg = 'Invalid login'
-            self.render('register.html', error = msg)
+            self.render('login.html', error = msg)
 
 class Logout(BlogHandler):
     def get(self):
