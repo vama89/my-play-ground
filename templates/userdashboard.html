@@ -2,9 +2,11 @@
 
 {% block content %}
 <h2>Welcome {{username}} <small><a href="/Logout">Logout</a></small></h2>
+
 {%for p in eventInfo%}
 {{p.eventInfoJson}}
 <br>
 <br>
 {%endfor%}
+
 {% endblock %}

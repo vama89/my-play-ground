@@ -11,4 +11,32 @@
 </div>
 <input type="submit">
 </form>
+
+<h2>Facebook Login:</h2>
+<script type="text/javascript" src="/js/test.js"></script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
+
+<!-- Then insert here more javascript code in order to wait to get the information
+
+FB.api('/me', function(response) {
+    console.log(JSON.stringify(response));
+
+    I have to use statements like that in order for this to work.
+
+    I think it should pre-fill stuff once, it gets the daata
+
+    Then what about friends?
+    Then what about pictures?
+});-->
 {% endblock %}

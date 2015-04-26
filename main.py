@@ -34,7 +34,7 @@ import json
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
-                                autoescape = True)
+                                autoescape = False)
 
 secret = 'fart'
 
@@ -85,25 +85,16 @@ class BlogHandler(webapp2.RequestHandler):
     
 class MainHandler(BlogHandler):
     def get(self):
-        #self.response.headers['Content-Type'] = 'text/plain'
-        #visits = self.request.cookies.get('visits', 0)
-        #self.write(visits)
         self.render("welcome.html")
 
 class UserDashboard(BlogHandler):
     def get(self):
-        #if user is logged in:
-            #get the JSON from the database
-            #self.render(userdashboard.html, json=json)
-            #just parse the json on the html page. Display it there.
         if self.user:
             username = self.user.name
             eventInfo = Event.query()
             self.render("userdashboard.html", username=username, eventInfo=eventInfo)
         else:
             self.redirect("/Login")
-        #I think ship the JSON as a var.
-        #self.render("userdashboard.html", eventInfoJson)
         
 class Vote(BlogHandler):
     def get(self):
@@ -111,16 +102,6 @@ class Vote(BlogHandler):
 
 class Results(BlogHandler):
     def get(self):
-        #get JSON from the specified user and pass this on
-
-        #Did everyone vote?
-
-        #If not:
-
-        event = {
-        "event" : "name is the name",
-        "Two's" : 4
-        }
         self.render("results.html")
 
 class CreateEvent(BlogHandler):
@@ -212,7 +193,7 @@ def valid_email(email):
 
 class Signup(BlogHandler):
     def get(self):
-        self.render("signup-form.html")
+        self.render("register.html")
 
     def post(self):
         have_error = False
@@ -240,7 +221,7 @@ class Signup(BlogHandler):
             have_error = True
 
         if have_error:
-            self.render('signup-form.html', **params)
+            self.render('register.html', **params)
         else:
             self.done()
 
@@ -253,7 +234,7 @@ class Register(Signup):
         u = User.by_name(self.username)
         if u:
             msg = 'That user already exists.'
-            self.render('signup-form.html', error_username = msg)
+            self.render('register.html', error_username = msg)
         else:
             u = User.register(self.username, self.password, self.email)
             u.put()
